@@ -2,6 +2,9 @@ from django.db import models
 from customer.models import Customer
 from address.models import CustomerAddress
 from product.models import Product
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.utils import timezone
 
 # Create your models here.
 class Order(models.Model):
@@ -25,6 +28,7 @@ class Order(models.Model):
         (5, 'completed'),
         (6, 'cancelled')
     )
+    created_on = models.DateTimeField(default=timezone.now(),blank=True, editable=False)
     status = models.PositiveIntegerField(choices=STATUS_OPTIONS, default=1)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -32,6 +36,9 @@ class Order(models.Model):
 class Item(models.Model):
     order = models.ForeignKey(Order) 
     amount = models.FloatField(default=0)
-    products = models.ManyToManyField(Product, blank=True)
+    item_price = models.FloatField(default=0)
+    content_type = models.ForeignKey(ContentType,default=12)
+    object_id = models.PositiveIntegerField(null=True)
+    object = GenericForeignKey('content_type', 'object_id')
     quantity = models.PositiveIntegerField(default=1)
     extra_details = models.TextField(null=True, blank=True)

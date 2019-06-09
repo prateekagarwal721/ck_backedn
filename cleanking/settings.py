@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'address',
     'product',
     'cart',
+    'payment',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,6 +95,22 @@ DATABASES = {
     }
 }
 
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers':['console'],
+            'propagate': True,
+            'level':'DEBUG',
+        }
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

@@ -16,10 +16,13 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework import routers
 from product.views import ProductViewSet
+from cart.views import CartViewSet
 
 router_v1 = routers.DefaultRouter()
 
+
 router_v1.register(r'category', ProductViewSet)
+router_v1.register(r'cart',CartViewSet)
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/v1/', include(router_v1.urls)),

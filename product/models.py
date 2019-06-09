@@ -44,7 +44,9 @@ class Product(models.Model):
         return self.name
 
     def get_pic_url(self):
-        return self.picture.url
+        if self.picture:
+            return self.picture.url
+        return
 
 
     
