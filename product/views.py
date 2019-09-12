@@ -22,3 +22,11 @@ class ProductViewSet(viewsets.ModelViewSet):
         product = Product.objects.filter(id=product_id).first()
         serializer = ProductSerializer(product)
         return Response({"sucess":True,"result":serializer.data})
+
+    @list_route()
+    def get_product_for_category(self,request):
+        sub_category_id = request.GET.get('id')
+        sub_category = SubCategory.objects.filter(id=sub_category_id).first()
+        products = Product.objects.filter(sub_category=sub_category)
+        serializer = ProductSerializer(products, many=True)
+        return Response({"sucess":True,"result":serializer.data})
